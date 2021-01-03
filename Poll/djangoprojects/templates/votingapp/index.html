@@ -1,0 +1,162 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Django Voting App</title>
+  </head>
+  <body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Django Voting App</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#languages">Languages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#result">Results</a>
+                    </li>
+                </ul>
+          </div>
+        </div>
+      </nav>
+
+
+
+    <div class="container-fluid" style="margin-bottom: 20 rem;">
+            <div class="row">
+            <div class="col-md-6" style="margin: 2rem auto 0 auto;">
+                <img src="{% static 'main.svg' %}" class="img-fluid" style="display: block; margin: 2rem auto; width: 200px; height: 200px;">
+                <div class="card" >
+                    <div class="card-body" >
+                    <form action="{% url 'getquery' %}" method="GET">
+                            <input list="languages" name="languages" class="form-control" style="margin-bottom: 1rem;">
+                            <datalist id="languages">
+                                {% for eachlanguage in arr %}
+                                <option value="{{eachlanguage}}">
+                                {% endfor %}
+                            </datalist>
+                                
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="submit" class="btn btn-success" style="display:block; margin: 0 auto;">
+                            </div>
+                            <div class="col-6">
+                                <input type="reset" class="btn btn-danger" style="display:block; margin: 0 auto;">
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+            
+            <div class="row" >
+                <div class="col-md-6" style="margin:2rem auto 0 auto;">
+                    <p class="badge bg-warning" id="result" name="result" style="text-align: center;display:block; font-size: 2rem;">
+                        Result  
+                    </p>  
+                    <hr>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive" style="margin: 2rem auto; text-align: center; ">
+                    <table class="table" >
+                        <thead>
+                          <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Language</th>
+                              <th scope="col">Count</th>     
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for key,value in globalcnt.items %}
+                            <td>{{forloop.counter}}</td>
+                            <td>{{key}}</td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{value}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{value}}</div>
+                                </div>
+                            </td>
+                           </tr>
+                        {% endfor %}
+                       
+                        </tbody>
+                      </table>
+                    </div>
+                    <a style=" float:right;" href="{% url 'sortdata' %}" class="btn btn-primary">SortData In Descending Order</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" style="margin:2rem auto 0 auto;">
+                    <p class="badge bg-success" id="about" name="about" style="text-align: center;display:block; font-size: 2rem;">
+                        About
+                    </p>
+                    <hr>
+                    <p class="lead">
+                        Pick Your Favorite Language and Vote
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" style="margin:2rem auto 0 auto;">
+                    <p  class="badge bg-danger" id="languages" name="languages" style="text-align: center;display:block; font-size: 2rem;">
+                        Languages
+                    </p>
+                    <hr>
+                    <p class="lead">
+                        <a href="{% url 'getquery' %}" ></a>
+                        <ul class="list-group">
+                            {% for eachlanguage in arr %}
+                            <li>{{eachlanguage}}</li>
+                            {% endfor %}
+                          </ul>
+                    </p>
+                </div>
+
+        </div>
+</div>
+        <div class="container-fluid" >
+            <div class="row">
+              <footer class="fixed-bottom navbar-light" style="background-color: black; color:white; text-align: center;">
+                <p>Thanks for using our app</p>
+              </footer>
+            </div>
+        </div>
+      
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+ 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+  </body>
+</html>
